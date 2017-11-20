@@ -118,7 +118,7 @@ public class ReversePolishImpl {
      *
      * @param a 栈顶运算符
      * @param b 需要对比的运算符
-     * @return true :栈顶运算符弹出  false ：b入符号栈
+     * @return true :栈顶运算符弹出,b继续和新的栈顶运算符对比  false ：b入符号栈
      */
     private static boolean priorityCompare(char a, char b) {
         if (hasLeft) {
