@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class HuffmanTree {
     Node mRoot;
-    static Node diyNode;
+    Node diyNode;
 
     /**
      * 创建哈弗曼树
@@ -26,7 +26,6 @@ public class HuffmanTree {
             Node parent = new Node("P" + count++, left.weight + right.weight);
             if (count == 5) {
                 diyNode = parent;
-                System.out.println("count=" + count + "的时候,节点为:" + parent.data);
             }
             parent.left = left;
             left.parent = parent;
@@ -192,6 +191,6 @@ public class HuffmanTree {
             System.out.println("data:" + stringNode.data + " left:" + leftData + " right:" + rightData + " weight:" + stringNode.weight);
         }
         huffmanTree.getCode(node);
-        System.out.println("\n树的深度为：" + huffmanTree.getDeep(diyNode) + "---" + huffmanTree.getDeep2(diyNode));
+        System.out.println("\n树的深度为：" + huffmanTree.getDeep(huffmanTree.diyNode) + "---" + huffmanTree.getDeep2(huffmanTree.diyNode));
     }
 }
