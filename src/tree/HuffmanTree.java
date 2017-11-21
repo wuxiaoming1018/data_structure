@@ -188,9 +188,11 @@ public class HuffmanTree {
         for (Node<String> stringNode : breadthList) {
             leftData = stringNode.left != null ? (String) stringNode.left.data : null;
             rightData = stringNode.right != null ? (String) stringNode.right.data : null;
-            System.out.println("data:" + stringNode.data + " left:" + leftData + " right:" + rightData + " weight:" + stringNode.weight);
+            System.out.println("data:" + stringNode.data + " left:" + leftData + " right:" +
+                    rightData + " weight:" + stringNode.weight);
         }
         huffmanTree.getCode(node);
-        System.out.println("\n树的深度为：" + huffmanTree.getDeep(huffmanTree.diyNode) + "---" + huffmanTree.getDeep2(huffmanTree.diyNode));
+        System.out.println("\n以"+huffmanTree.diyNode.data+"为根节点的树的深度为：" +
+                huffmanTree.getDeep(huffmanTree.diyNode) + "---" + huffmanTree.getDeep2(huffmanTree.diyNode));
     }
 }
