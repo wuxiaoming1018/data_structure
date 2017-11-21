@@ -12,6 +12,7 @@ public class HuffmanTree {
 
     /**
      * 创建哈弗曼树
+     *
      * @param nodeList
      * @return
      */
@@ -60,6 +61,11 @@ public class HuffmanTree {
         return list;
     }
 
+    /**
+     * 获取哈夫曼编码 left 0  right 1
+     *
+     * @param node
+     */
     public void getCode(Node node) {
         if (node.parent == null) {
             System.out.println("您所查找的元素不存在，请重新选择");
@@ -76,9 +82,52 @@ public class HuffmanTree {
             }
             tNode = tNode.parent;
         }
-        System.out.println("节点"+node.data+"的哈夫曼编码为:");
+        System.out.println("节点" + node.data + "的哈夫曼编码为:");
         while (!stack.isEmpty()) {
             System.out.print(stack.pop());
+        }
+    }
+
+    /**
+     * 获取树的深度  递归实现
+     *
+     * @param root
+     * @return
+     */
+    public int getDeep(Node root) {
+        int index = 0;
+        if (root != null) {
+            int leftDeep = getDeep(root.left);
+            int rightDeep = getDeep(root.right);
+            index = leftDeep > rightDeep ? leftDeep + 1 : rightDeep + 1;
+        }
+        return index;
+    }
+
+    public int getDeep2(Node root) {
+        int level = 0, last, cur;
+        Queue<Node> queue = new ArrayDeque<>();
+        Node node;
+        if (root == null) {
+            return 0;
+        } else {
+            queue.offer(root);
+            while (!queue.isEmpty()) {
+                last = queue.size();
+                cur = 0;
+                while (cur < last) {
+                    node = queue.poll();
+                    cur++;
+                    if (node.left != null) {
+                        queue.offer(node.left);
+                    }
+                    if (node.right != null) {
+                        queue.offer(node.right);
+                    }
+                }
+                level++;//循环完一层，加1
+            }
+            return level;
         }
     }
 
@@ -132,5 +181,6 @@ public class HuffmanTree {
             System.out.println("data:" + stringNode.data + " left:" + leftData + " right:" + rightData + " weight:" + stringNode.weight);
         }
         huffmanTree.getCode(node);
+        System.out.println("\n树的深度为：" + huffmanTree.getDeep(huffmanTree.mRoot) + "---" + huffmanTree.getDeep2(huffmanTree.mRoot));
     }
 }
