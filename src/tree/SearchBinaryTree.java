@@ -189,7 +189,7 @@ public class SearchBinaryTree {
     }
 
     public static void main(String[] args) {
-        int[] arrys = {20, 10, 6, 4, 2, 7, 89, 9, 30, 15, 14};
+        int[] arrys = {20, 10, 6, 4, 2, 7, 89, 59, 30, 15, 14};
         SearchBinaryTree tree = new SearchBinaryTree(arrys[0]);
         System.out.println("排序前:");
         System.out.print(arrys[0] + " ");
@@ -203,7 +203,7 @@ public class SearchBinaryTree {
         System.out.println();
         Node result = tree.findNode(7);
         System.out.println(result == null ? null : result.data);
-        System.out.println("删除后：");
+        System.out.println("删除元素"+result.data+"后：");
         tree.delNode(result);
         tree.middleOrder(tree.mRoot);
     }
