@@ -16,7 +16,7 @@ public class PrimAlgorithm {
     private Map<Character, Integer> map = new HashMap<>();
     private List<Character> mResult;
     private Stack<Character> stack;
-    private List<Integer> codeList = new ArrayList<>();
+    private List<Character> codeList = new ArrayList<>();
 
     public PrimAlgorithm() {
         mCharList = new ArrayList<>();
@@ -78,13 +78,13 @@ public class PrimAlgorithm {
             for (Character character : stack) {
                 for (int i = 0; i < list.size(); i++) {
                     if (list.get(i).equals(character)) {
-                        codeList.add(i);
+                        codeList.add(list.get(i));
                     }
                 }
             }
         }
         if (codeList != null) {
-            for (Integer integer : codeList) {
+            for (Character integer : codeList) {
                 list.remove(integer);
             }
         }
