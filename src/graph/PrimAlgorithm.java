@@ -13,16 +13,21 @@ public class PrimAlgorithm {
     private static final int MAX_NUMBER = 0XFFF8;
     private char error = 'x';
     private List<Character> mCharList;
-    private Map<Character,Integer> map = new HashMap<>();
+    private Map<Character, Integer> map = new HashMap<>();
+    private List<Character> mResult;
+    private Stack<Character> stack;
+    private List<Integer> codeList = new ArrayList<>();
 
     public PrimAlgorithm() {
         mCharList = new ArrayList<>();
+        mResult = new ArrayList<>();
+        stack = new Stack<>();
         mCharList.add('A');//从‘A’开始操作
         vertices = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G'};
         this.verticesSize = vertices.length;
         matrix = new int[vertices.length][vertices.length];
         for (int i = 0; i < vertices.length; i++) {
-            map.put(vertices[i],i);
+            map.put(vertices[i], i);
         }
     }
 
@@ -56,7 +61,55 @@ public class PrimAlgorithm {
     private char getFirstNeighbor(char v1) {
         for (int i = 0; i < verticesSize; i++) {
             if (matrix[map.get(v1)][i] != 0 && matrix[map.get(v1)][i] != MAX_NUMBER) {
-                mCharList.add(vertices[i]);
+                return vertices[i];
+            }
+        }
+        return error;
+    }
+
+    private List<Character> getNeighbors(char v1) {
+        List<Character> list = new ArrayList<>();
+        for (int i = 0; i < verticesSize; i++) {
+            if (matrix[map.get(v1)][i] != 0 && matrix[map.get(v1)][i] != MAX_NUMBER) {
+                list.add(vertices[i]);
+            }
+        }
+        if (!stack.isEmpty()) {
+            for (Character character : stack) {
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).equals(character)) {
+                        codeList.add(i);
+                    }
+                }
+            }
+        }
+        if (codeList != null) {
+            for (Integer integer : codeList) {
+                list.remove(integer);
+            }
+        }
+        codeList.clear();
+        return list;
+    }
+
+    private int getMinValue(char v, List<Character> list) {
+        List<Integer> dataList = new ArrayList<>();
+        for (Character character : list) {
+            dataList.add(getWidget(v, character));
+        }
+        return Collections.min(dataList);
+    }
+
+    /**
+     * 根据顶点和权值(路径),获取下一个节点
+     *
+     * @param v      顶点
+     * @param weight 权值
+     * @return
+     */
+    private char getNextVertices(char v, int weight) {
+        for (int i = 0; i < vertices.length; i++) {
+            if (matrix[map.get(v)][i] == weight) {
                 return vertices[i];
             }
         }
@@ -88,14 +141,21 @@ public class PrimAlgorithm {
         prim.matrix[4] = a4;
         prim.matrix[5] = a5;
         prim.matrix[6] = a6;
-        /*prim.getFirstNeighbor('A');
-        prim.getMinValue(prim.mCharList);
-        for (Character character : prim.mCharList) {
-            System.out.print(character+" ");
-        }*/
-        String as = "15847895425986245";
-        System.out.println(as.substring(10,13));
-        System.out.println(getLength(as));
+//        int min = prim.getMinValue('E', prim.getNeighbors('E'));
+//        System.out.println("min =" + min);
+//        System.out.println("E--->"+prim.getNextVertices('E', min));
+        prim.getResult('A');
+        for (Character character : prim.stack) {
+            System.out.print(character + "-->");
+        }
+//        prim.getFirstNeighbor('A');
+//        prim.getMinValue(prim.mCharList);
+//        for (Character character : prim.mCharList) {
+//            System.out.print(character+" ");
+//        }
+//        String as = "15847895425986245";
+//        System.out.println(as.substring(10,13));
+//        System.out.println(getLength(as));
     }
 
     public static int getLength(String s) {
@@ -113,5 +173,20 @@ public class PrimAlgorithm {
             }
         }
         return valueLength;
+    }
+
+    private void getResult(char index) {
+        if (stack.size() >= verticesSize) {
+            return;
+        }
+        if (!stack.contains(index)) {
+            stack.push(index);
+        }
+        int min = getMinValue(index, getNeighbors(index));
+        char next = getNextVertices(index, min);
+        if(stack.containsAll(getNeighbors(next))){
+            next = stack.peek();
+        }
+        getResult(next);
     }
 }
